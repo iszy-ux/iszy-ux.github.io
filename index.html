@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iszy Cybersecurity Portfolio</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+  :root{
+    --bg:#F5F5F7;
+    --surface:#FFFFFF;
+    --surface-2:#EDEDF0;
+    --text:#1D1D1F;
+    --text-2:#6E6E73;
+    --border:#DADADE;
+    --accent:#0A0A0A;
+    --accent-inv:#FFFFFF;
+    --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+    --mono: "SF Mono", ui-monospace, "JetBrains Mono", "Menlo", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  html[data-theme="dark"]{
+    --bg:#161618;
+    --surface:#1E1E21;
+    --surface-2:#28282C;
+    --text:#F2F2F4;
+    --text-2:#9A9AA1;
+    --border:#38383D;
+    --accent:#FFFFFF;
+    --accent-inv:#0A0A0A;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.45);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    transition:background .35s ease, color .35s ease;
+  }
+  a{color:inherit;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:saturate(180%) blur(20px);
+    background:color-mix(in srgb, var(--bg) 78%, transparent);
+    border-bottom:1px solid var(--border);
+  }
+  .navrow{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:920px;margin:0 auto;}
+  .wordmark{font-weight:700;font-size:15px;letter-spacing:-0.01em;text-decoration:none;}
+  .navlinks{display:flex;align-items:center;gap:22px;font-size:13px;color:var(--text-2);}
+  .navlinks a{text-decoration:none;color:var(--text-2);transition:color .2s;}
+  .navlinks a:hover{color:var(--text);}
+  .toggle{
+    width:44px;height:26px;border-radius:20px;border:1px solid var(--border);
+    background:var(--surface-2);position:relative;cursor:pointer;flex-shrink:0;
+    padding:0;
+  }
+  .toggle::after{
+    content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;
+    background:var(--accent);transition:transform .3s cubic-bezier(.4,0,.2,1);
+  }
+  html[data-theme="dark"] .toggle::after{transform:translateX(18px);}
+
+  /* HERO */
+  header.hero{padding:110px 0 60px;text-align:center;}
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--text-2);
+    text-transform:uppercase;margin-bottom:18px;display:inline-flex;align-items:center;gap:8px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:#5FBF6E;display:inline-block;
+    box-shadow:0 0 0 0 rgba(95,191,110,.5);animation:pulse 2s infinite;}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(95,191,110,.45);}
+    70%{box-shadow:0 0 0 7px rgba(95,191,110,0);}
+    100%{box-shadow:0 0 0 0 rgba(95,191,110,0);}
+  }
+  h1.name{
+    font-size:clamp(42px,7vw,72px);font-weight:700;letter-spacing:-0.03em;margin:0 0 12px;
+  }
+  .tagline{font-size:clamp(17px,2.4vw,21px);color:var(--text-2);max-width:560px;margin:0 auto 30px;font-weight:400;line-height:1.5;}
+  .links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--sans);font-size:14px;font-weight:500;padding:10px 20px;border-radius:980px;
+    text-decoration:none;border:1px solid var(--border);transition:all .2s ease;
+  }
+  .btn.primary{background:var(--accent);color:var(--accent-inv);border-color:var(--accent);}
+  .btn.primary:hover{opacity:.85;}
+  .btn.ghost{color:var(--text);}
+  .btn.ghost:hover{background:var(--surface-2);}
+
+  /* SECTION HEADS */
+  .section-head{padding:70px 0 8px;}
+  .section-head h2{font-size:clamp(28px,4vw,38px);letter-spacing:-0.02em;margin:0 0 8px;font-weight:700;}
+  .section-head p{color:var(--text-2);font-size:15px;margin:0;max-width:520px;}
+
+  /* ABOUT */
+  .about{padding:70px 0;border-top:1px solid var(--border);max-width:720px;}
+  .about h2{font-size:clamp(26px,3.6vw,34px);letter-spacing:-0.02em;margin:0 0 18px;font-weight:700;}
+  .about p{font-size:15.5px;line-height:1.8;color:var(--text-2);margin:0 0 16px;}
+  .about p:last-child{margin-bottom:0;}
+  .about p b{color:var(--text);font-weight:600;}
+
+  /* SKILLS */
+  .skills{padding:70px 0 90px;border-top:1px solid var(--border);}
+  .skills h2{font-size:clamp(26px,3.6vw,34px);letter-spacing:-0.02em;margin:0 0 30px;font-weight:700;}
+  .skills-block{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
+  .skill-group h4{font-size:12px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--text-2);margin:0 0 12px;font-weight:600;}
+  .skill-pills{display:flex;flex-wrap:wrap;gap:8px;}
+  @media (max-width:700px){.skills-block{grid-template-columns:1fr;gap:26px;}}
+
+  /* CONTACT */
+  .contact{padding:70px 0 90px;border-top:1px solid var(--border);text-align:center;}
+  .contact h2{font-size:clamp(26px,3.6vw,34px);letter-spacing:-0.02em;margin:0 0 12px;font-weight:700;}
+  .contact p{color:var(--text-2);font-size:15px;max-width:440px;margin:0 auto 26px;line-height:1.6;}
+  .contact .links{margin-bottom:0;}
+
+  /* PROJECTS */
+  .projects{padding:24px 0 100px;display:flex;flex-direction:column;gap:14px;}
+  .card{
+    background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .card-head{
+    display:flex;align-items:center;gap:20px;padding:22px 24px;cursor:pointer;user-select:none;
+  }
+  .num{font-family:var(--mono);font-size:13px;color:var(--text-2);width:26px;flex-shrink:0;}
+  .card-titles{flex:1;min-width:0;}
+  .card-titles h3{margin:0 0 4px;font-size:18px;font-weight:600;letter-spacing:-0.01em;}
+  .card-titles p{margin:0;color:var(--text-2);font-size:13.5px;}
+  .chev{
+    width:20px;height:20px;flex-shrink:0;color:var(--text-2);transition:transform .3s ease;
+  }
+  .card.open .chev{transform:rotate(180deg);}
+  .card-body{
+    max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);
+  }
+  .card-body-inner{padding:0 24px 28px;border-top:1px solid var(--border);}
+  .card-body-inner{padding-top:22px;}
+
+  .stack{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+  .pill{
+    font-family:var(--mono);font-size:11.5px;padding:5px 10px;border-radius:6px;
+    background:var(--surface-2);color:var(--text-2);border:1px solid var(--border);
+  }
+  .project-link{margin:0 0 22px;}
+  .project-link .btn{display:inline-block;}
+  .desc{font-size:14.5px;line-height:1.65;color:var(--text);margin-bottom:20px;}
+  .context{
+    margin-bottom:20px;padding:16px 18px;border-left:2px solid #C9812E;background:var(--surface-2);
+    border-radius:0 10px 10px 0;font-size:13.5px;line-height:1.65;color:var(--text);
+  }
+  .context b{display:block;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:#C9812E;margin-bottom:6px;font-weight:600;}
+  .context-src{display:block;margin-top:8px;font-family:var(--mono);font-size:10.5px;color:var(--text-2);}
+  .remediation-list li::before{background:#4B9F6B !important;}
+  .sub{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-2);margin:22px 0 10px;}
+  .steps{margin:0;padding:0;list-style:none;}
+  .steps li{
+    font-size:14px;line-height:1.55;padding:9px 0 9px 22px;position:relative;border-bottom:1px solid var(--border);color:var(--text);
+  }
+  .steps li:last-child{border-bottom:none;}
+  .steps li::before{
+    content:"";position:absolute;left:0;top:16px;width:6px;height:6px;border-radius:50%;background:var(--text-2);
+  }
+  .steps li b{font-weight:600;}
+  .finding{
+    margin-top:20px;padding:16px 18px;border-left:2px solid var(--accent);background:var(--surface-2);
+    border-radius:0 10px 10px 0;font-size:13.5px;line-height:1.6;color:var(--text);
+  }
+  .finding b{display:block;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-2);margin-bottom:6px;font-weight:600;}
+
+  .shots{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px;}
+  .shot{border-radius:10px;overflow:hidden;border:1px solid var(--border);background:#111;}
+  .shot img{width:100%;display:block;cursor:zoom-in;}
+  .shot-cap{font-family:var(--mono);font-size:10.5px;color:var(--text-2);padding:7px 10px;background:var(--surface);border-top:1px solid var(--border);}
+
+  /* LIGHTBOX */
+  .lightbox{
+    position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;
+    background:rgba(245,245,247,0.94);backdrop-filter:blur(6px);padding:40px;cursor:zoom-out;
+    opacity:0;transition:opacity .2s ease;
+  }
+  .lightbox.open{display:flex;opacity:1;}
+  .lightbox-inner{max-width:min(1200px,92vw);max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .lightbox img{max-width:100%;max-height:78vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.18);cursor:default;border:1px solid rgba(0,0,0,0.08);}
+  .lightbox-cap{font-family:var(--mono);font-size:12.5px;color:#3A3A3D;text-align:center;max-width:90%;}
+  .lightbox-close{
+    position:absolute;top:22px;right:26px;width:40px;height:40px;border-radius:50%;
+    background:rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.12);color:#1D1D1F;
+    font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .lightbox-close:hover{background:rgba(0,0,0,0.1);}
+  .placeholder-shot{
+    border:1px dashed var(--border);border-radius:10px;padding:22px;text-align:center;
+    color:var(--text-2);font-family:var(--mono);font-size:11.5px;margin-top:20px;
+  }
+  @media (max-width:600px){.shots{grid-template-columns:1fr;}}
+
+  footer{border-top:1px solid var(--border);padding:34px 0 50px;}
+  .footrow{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;color:var(--text-2);font-size:13px;}
+  .footlinks{display:flex;gap:16px;}
+  .footlinks a{text-decoration:none;color:var(--text-2);}
+  .footlinks a:hover{color:var(--text);}
+
+  @media (max-width:600px){
+    .card-head{padding:18px;gap:14px;}
+    .card-body-inner{padding-left:18px;padding-right:18px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navrow">
+    <a href="#top" class="wordmark">Iszy</a>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <a href="https://github.com/iszy-ux" target="_blank" rel="noopener">GitHub</a>
+      <button class="toggle" id="themeToggle" aria-label="Toggle theme"></button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> Cybersecurity Home Lab Suricata + Splunk + VirusTotal</div>
+    <h1 class="name">Abaku Israel Cybersecurity Portfolio</h1>
+    <p class="tagline">Aspiring SOC Analyst learning by building, testing, investigating, and documenting real security scenarios in a home lab.</p>
+    <div class="links">
+      <a class="btn primary" href="#projects">View projects</a>
+      <a class="btn ghost" href="https://github.com/iszy-ux" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</header>
+
+<section class="skills wrap" id="skills">
+  <h2>Skills</h2>
+  <div class="skills-block">
+    <div class="skill-group">
+      <h4>Detection &amp; Monitoring</h4>
+      <div class="skill-pills">
+        <span class="pill">Suricata IDS</span>
+        <span class="pill">Custom Rule Writing</span>
+        <span class="pill">Splunk SIEM</span>
+        <span class="pill">SPL</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Investigation &amp; Intel</h4>
+      <div class="skill-pills">
+        <span class="pill">Alert Investigation</span>
+        <span class="pill">IP Reputation Analysis</span>
+        <span class="pill">VirusTotal API</span>
+        <span class="pill">IOC Triage</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Infrastructure</h4>
+      <div class="skill-pills">
+        <span class="pill">Linux (Ubuntu)</span>
+        <span class="pill">VirtualBox</span>
+        <span class="pill">Kali Linux</span>
+        <span class="pill">Log Forwarding</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about wrap" id="about">
+  <h2>About</h2>
+  <p>I'm working toward my first SOC analyst / blue team role. I built this home lab so I could practice security work instead of only reading about it.</p>
+  <p>I use Suricata to detect network activity, Splunk to search and understand alerts, Nessus to find security problems, and VirusTotal to check suspicious IP addresses.</p>
+  <p>For each project, I create a controlled test, look at the alerts and logs, investigate what happened, and document what I found. The screenshots on this site show the actual work from my lab.</p>
+</section>
+
+<section class="section-head wrap" id="projects">
+  <h2>Projects</h2>
+  <p>Four hands on security projects covering suspicious network traffic, vulnerability scanning, SSH attacks, and threat intelligence checks.</p>
+</section>
+
+<section class="wrap">
+  <div class="projects" id="projectList"></div>
+</section>
+
+<section class="contact wrap" id="contact">
+  <h2>Get in touch</h2>
+  <p>I'm open to entry level SOC analyst and blue team opportunities.</p>
+  <div class="links">
+    <a class="btn primary" href="https://github.com/iszy-ux" target="_blank" rel="noopener">View my GitHub</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footrow">
+    <span>Israel's Cybersecurity Portfolio</span>
+    <div class="footlinks">
+      <a href="https://github.com/iszy-ux" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+  <div class="lightbox-inner">
+    <img id="lightboxImg" src="" alt="">
+    <div class="lightbox-cap" id="lightboxCap"></div>
+  </div>
+</div>
+
+<script>
+// theme
+const root = document.documentElement;
+const saved = 'dark';
+root.setAttribute('data-theme', matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+document.getElementById('themeToggle').addEventListener('click', ()=>{
+  const cur = root.getAttribute('data-theme');
+  root.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+});
+
+// project data
+const projects = [
+  {
+    num:"01",
+    title:"C2 Beaconing Detection",
+    repo:"https://github.com/iszy-ux/c2-beaconing-detection",
+    sub:"Simulated Command &amp; Control · fixed interval traffic · Splunk timechart",
+    stack:["Suricata trojan activity rules","Metasploit port 4444","Splunk timechart"],
+    desc:"Created repeated network requests from Kali to an Ubuntu lab machine and used Suricata and Splunk to see whether the repeated timing pattern could be detected.",
+    context:{
+      text:"Imagine a computer in a company quietly contacting the same outside server every few seconds. A single request may look harmless, but the same request repeating at a regular interval can be a useful warning sign. I built this lab test to learn how an analyst can spot that pattern before assuming what caused it.",
+      source:"Real world connection: SOC analysts often investigate repeated network connections because automated programs can communicate with remote systems without a user actively doing anything."
+    },
+    steps:[
+      "Wrote four Suricata rules covering the common C2 patterns: regular HTTP beaconing (threshold based), Metasploit's port 4444, HTTP alt port 8080, and a DNS beacon keyword rule",
+      "Started a Python HTTP server on port 8080 on the target to act as the simulated C2 listener",
+      "Ran a bash beacon script from Kali sending a timestamped HTTP request to <b>/beacon?id=infected-host-01</b> every 10 seconds, incrementing a counter each cycle",
+      "Simulated a second channel using repeated <b>nc</b> connection attempts to Metasploit's default port 4444",
+      "Watched Suricata fire \"Possible C2 HTTP Alt Port\" and \"Metasploit C2 Port Detected\" alerts in real time as both channels ran",
+      "Extracted every beacon request from eve.json. The timestamps landed almost exactly 10 seconds apart, the core forensic tell",
+      "In Splunk, timecharted the beacon traffic by source IP. The interval showed up as a perfectly even, repeating spike pattern",
+      "Ran a duration and frequency analysis: 19 beacons from one source across a 3.02 minute window, confirming sustained automated behavior"
+    ],
+    finding:"The repeated requests arrived almost exactly 10 seconds apart. The Splunk timechart made the pattern easy to see, showing why looking at timing and repeated activity can be useful when investigating suspicious network traffic.",
+    remediation:[
+      "Block the C2 destination (192.168.56.107 on ports 8080 and 4444) at the firewall the moment the alert is confirmed",
+      "Isolate the beaconing host from the network pending forensic triage , a live C2 channel is an active incident, not a low priority ticket",
+      "Kill the beaconing process on the host and check persistence mechanisms (cron jobs, systemd services, startup scripts) for how it survives reboot",
+      "Push the C2 IP/port pair to the threat intel blocklist so any other host beaconing to the same destination is caught immediately",
+      "Threat hunt the rest of the environment for the same ~10s interval pattern to any destination, in case more than one host is infected"
+    ],
+    shots:[
+      {img:"P9_01", cap:"C2 beacon script created and launched on Kali"},
+      {img:"P9_02", cap:"Python HTTP server on the target catching incoming beacons"},
+      {img:"P9_03", cap:"Second channel , nc connection attempts to port 4444"},
+      {img:"P9_04", cap:"Suricata firing Metasploit / C2 Alt Port alerts"},
+      {img:"P9_05", cap:"Full C2 alert log showing C2, Beacon, and Metasploit signatures"},
+      {img:"P9_06", cap:"Beacon requests extracted from eve.json, about 10 seconds apart"},
+      {img:"P9_07", cap:"Splunk timechart showing regular beacon spikes by source IP"},
+      {img:"P9_08", cap:"Duration analysis showing 19 beacons over 3.02 minutes"}
+    ]
+  },
+  {
+    num:"02",
+    title:"Vulnerability Scanning",
+    repo:"https://github.com/iszy-ux/Vulnerability-Scanning",
+    sub:"Nessus Essentials · CVE discovery · remediation · Suricata cross-detection",
+    stack:["Nessus Essentials 10.8.3","CVE 1999 0524","iptables","Suricata"],
+    desc:"Scanned the lab machines with Nessus, investigated one security finding, applied a firewall fix, and scanned again to check whether the problem was actually fixed.",
+    context:{
+      text:"In a real company, a vulnerability report is only useful if someone can understand the problem, fix it, and check that the fix worked. I wanted to practice that full process instead of stopping after finding a list of vulnerabilities.",
+      source:"Real world connection: security teams regularly scan systems, review findings, fix important issues, and rescan to make sure the fix did not just look correct on paper."
+    },
+    steps:[
+      "Ran a host discovery scan across 192.168.56.0/24 and found both project VMs alive",
+      "Ran a Basic Network Scan (\"Home Lab Vuln Scan\") against both hosts , 56 vulnerabilities returned across Ubuntu, Suricata, Vim, and general findings",
+      "Drilled into <b>CVE 1999 0524</b> (ICMP Timestamp Disclosure). Plugin #10114, CVSSv2 2.1, allows an attacker to fingerprint system time and defeat time based authentication",
+      "Confirmed Suricata alerted on the Nessus probe traffic in parallel, cross-checked via <b>fast.log</b> signature counts",
+      "Remediated with iptables , dropped ICMP timestamp request and timestamp reply packets, then made the rule persistent across reboots",
+      "Ran again the scan to verify the fix, and configured a weekly Monday and Friday 7 AM scheduled scan for ongoing coverage"
+    ],
+    finding:"I found the ICMP timestamp issue, applied an iptables rule to block it, and ran another scan to check the result. This gave me practice with the complete process: find a problem, fix it, and verify the fix.",
+    remediation:[
+      "Applied the fix immediately using iptables rules dropping ICMP timestamp request and timestamp reply packets at the host firewall",
+      "Made the rule persistent via netfilter persistent so it survives a reboot instead of silently reverting",
+      "Verified closure with an actual rescan rather than trusting the fix blind. The rescan is what proves remediation, not the fix itself",
+      "Scheduled recurring weekly scans so configuration drift or newly introduced findings don't sit undetected for months",
+      "Review the remaining findings and decide which ones need attention first based on their severity, exposure, and the risk they create."
+    ],
+    shots:[
+      {img:"P7_02", cap:"Host discovery , both project VMs found"},
+      {img:"P7_03", cap:"Discovery scan completed"},
+      {img:"P7_04", cap:"Home Lab Vuln Scan , 56 vulnerabilities, 86 remediations"},
+      {img:"P7_05", cap:"Plugin update + custom Suricata alert counts (FTP/SMB/RDP rules added)"},
+      {img:"P7_06", cap:"Full vulnerability list sorted by severity"},
+      {img:"P7_07", cap:"CVE 1999 0524 detail , ICMP Timestamp Disclosure"},
+      {img:"P7_08", cap:"Weekly scheduled scan , Mon/Fri 7:00 AM"},
+      {img:"P7_09", cap:"Rescan sorted by CVSS to verify the fix"},
+      {img:"P7_10", cap:"iptables remediation applied and made persistent"}
+    ]
+  },
+  {
+    num:"03",
+    title:"SSH Brute-Force Detection",
+    repo:"https://github.com/iszy-ux/SSH-Brute-Force-Detection",
+    sub:"Hydra attack simulation · Suricata alerting · Splunk correlation",
+    stack:["Hydra","OpenSSH","Suricata","Splunk SPL"],
+    desc:"Used Hydra in the lab to simulate repeated SSH login attempts, watched Suricata create alerts, and used Splunk to see which source IP generated the most activity.",
+    context:{
+      text:"SSH is commonly used to manage Linux servers. If an attacker keeps trying usernames and passwords against an exposed SSH service, a security team needs to notice the repeated attempts before a login succeeds. I built this test to practice detecting that kind of activity and finding the source in the logs.",
+      source:"Real world connection: SOC analysts may investigate repeated failed logins, identify the source, and decide whether to block it, rate limit it, or investigate a successful login."
+    },
+    steps:[
+      "Ran a targeted Nmap scan from Kali (<b>nmap -p 22</b>) confirming port 22 was open",
+      "Ran Hydra from Kali against the <b>ubuntu</b> user with a wrong password list to simulate a credential attack",
+      "Watched the first <b>SSH Attempt</b> alert fire. It was classified as Attempted Administrator Privilege Gain, priority 1",
+      "Repeated the attempt and confirmed multiple SSH Attempt alerts logged in sequence",
+      "In Splunk, searched <b>sourcetype=fast SSH</b> and confirmed 12 SSH Attempt events indexed",
+      "Ran a stats count by src_ip correlation search to rank attacking IPs by volume across all 330 alert events"
+    ],
+    finding:"The Splunk search showed that 192.168.56.104 produced most of the alerts: 303 out of 330 events. This made it easier to identify which source needed attention first.",
+    remediation:[
+      "Block or rate limit the source IP at the firewall as soon as the brute force threshold rule fires",
+      "Disable SSH password authentication entirely and enforce key based authentication. This removes the attack surface this technique depends on",
+      "Deploy Fail2ban (or equivalent) for dynamic, automatic blocking of repeated failed logins going forward",
+      "If any authentication attempt succeeded, treat it as a confirmed compromise: rotate the credential and hunt for persistence (new SSH keys, cron jobs, unexpected processes)",
+      "Push the confirmed malicious source IP to the threat intel blocklist so repeat attempts are rejected before they reach the auth layer"
+    ],
+    shots:[
+      {img:"P5_02", cap:"Nmap port 22 scan, confirming the port from Kali"},
+      {img:"P5_04", cap:"First SSH Attempt alert, Priority 1"},
+      {img:"P5_05", cap:"Multiple SSH Attempt alerts logged"},
+      {img:"P5_06", cap:"Hydra brute force run against the ubuntu user"},
+      {img:"P5_07", cap:"Splunk, 12 SSH Attempt events indexed"},
+      {img:"P5_08", cap:"stats count by src_ip, top attacking IP ranked"}
+    ]
+  },
+  {
+    num:"04",
+    title:"VirusTotal Threat Intel Enrichment",
+    repo:"https://github.com/iszy-ux/Virus-total-integration",
+    sub:"IP reputation lookups · analyst verdict logic",
+    stack:["VirusTotal API","vt_ command","Splunk App"],
+    desc:"Connected VirusTotal to Splunk so an analyst can check an IP address and see reputation information without leaving the investigation.",
+    context:{
+      text:"A SOC analyst can receive an alert about an IP address without knowing whether the address is actually dangerous. Checking reputation information helps add context before deciding what to do. I built this project to practice that step and to see how an analyst can use an enrichment tool from inside Splunk.",
+      source:"Real world connection: analysts often check suspicious IPs, domains, or files against threat intelligence sources before closing an alert or escalating it."
+    },
+    steps:[
+      "Installed the official VirusTotal App for Splunk from the app browser, registering the <b>vt_</b> custom search command",
+      "Generated a personal VirusTotal API key and saved it in the app's setup page",
+      "Ran <b>| vt_ ip=myip</b> against a known reputable public IP (8.8.8.8) and tabled the results",
+      "Ran the same lookup against an internal project IP (192.168.56.104) for comparison",
+      "Pulled the full verdict table , reputation score, malicious/suspicious/harmless/undetected vendor counts, ASN owner, and network range",
+      "Applied verdict logic: 8.8.8.8 returned reputation 543, only 1 flagged vendor against 55 harmless + 35 undetected , read as benign, with the single flag treated as noise rather than a threat"
+    ],
+    finding:"The VirusTotal lookup returned one flagged vendor out of 91 for 8.8.8.8, while the other results were mostly harmless or undetected and the address belonged to Google. The main lesson was not to treat one result as proof of a threat; the surrounding information matters too.",
+    remediation:[
+      "For a confirmed malicious IOC: block at the firewall/DNS layer, push to the blocklist, and hunt for any other host that communicated with it",
+      "For a confirmed benign verdict (the 8.8.8.8 case): close the alert with the reasoning documented, rather than escalating out of caution alone",
+      "If a benign IOC keeps re-triggering the same rule, tune the correlation logic instead of investigating again the same false positive every time",
+      "Feed the verdict back into Splunk as a lookup table so future alerts referencing the same IOC resolve automatically instead of repeating manual work"
+    ],
+    shots:[
+      {img:"P6_01", cap:"Installing the VirusTotal App for Splunk"},
+      {img:"P6_02", cap:"VirusTotal API key saved successfully"},
+      {img:"P6_03", cap:"vt_ IP lookup on 8.8.8.8, reputation 543"},
+      {img:"P6_04", cap:"vt_ lookup on an internal project IP for comparison"},
+      {img:"P6_05", cap:"Full verdict table showing malicious, suspicious, harmless, undetected, and ASN owner"}
+    ]
+  }
+];
+
+const imgMap = {
+  P5_02:"images/p5-02-nmap-port22-scan.jpg",
+  P5_04:"images/p5-04-first-ssh-alert.jpg",
+  P5_05:"images/p5-05-multiple-ssh-alerts.jpg",
+  P5_06:"images/p5-06-hydra-bruteforce.jpg",
+  P5_07:"images/p5-07-splunk-ssh-events.jpg",
+  P5_08:"images/p5-08-splunk-top-attacker-ip.jpg",
+  P6_01:"images/p6-01-install-vt-app.jpg",
+  P6_02:"images/p6-02-vt-api-key-setup.jpg",
+  P6_03:"images/p6-03-vt-lookup-8888.jpg",
+  P6_04:"images/p6-04-vt-lookup-internal-ip.jpg",
+  P6_05:"images/p6-05-vt-full-verdict-table.jpg",
+  P7_02:"images/p7-02-host-discovery.jpg",
+  P7_03:"images/p7-03-discovery-complete.jpg",
+  P7_04:"images/p7-04-home-lab-scan-history.jpg",
+  P7_05:"images/p7-05-plugins-updated-terminal.jpg",
+  P7_06:"images/p7-06-vuln-list-full.jpg",
+  P7_07:"images/p7-07-icmp-timestamp-detail.jpg",
+  P7_08:"images/p7-08-scheduled-scan-config.jpg",
+  P7_09:"images/p7-09-rescan-sorted-cvss.jpg",
+  P7_10:"images/p7-10-remediation-iptables.jpg",
+  P9_01:"images/p9-01-beacon-script-create.jpg",
+  P9_02:"images/p9-02-http-server-catching-beacons.jpg",
+  P9_03:"images/p9-03-nc-port-4444-beacon.jpg",
+  P9_04:"images/p9-04-suricata-c2-alerts.jpg",
+  P9_05:"images/p9-05-full-alert-grep.jpg",
+  P9_06:"images/p9-06-extracted-beacon-timestamps.jpg",
+  P9_07:"images/p9-07-splunk-timechart.jpg",
+  P9_08:"images/p9-08-splunk-duration-analysis.jpg"
+};
+
+const list = document.getElementById('projectList');
+projects.forEach((p, i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  const shotsHtml = p.shots.length
+    ? `<div class="shots">${p.shots.map(s=>`<div class="shot"><img src="${imgMap[s.img]}" alt="${s.cap}" loading="lazy"><div class="shot-cap">${s.cap}</div></div>`).join('')}</div>`
+    : `<div class="placeholder-shot">Screenshots pending , pipeline verified via SPL / vt_ output, visuals to follow</div>`;
+  card.innerHTML = `
+    <div class="card-head" data-idx="${i}">
+      <span class="num">${p.num}</span>
+      <div class="card-titles">
+        <h3>${p.title}</h3>
+        <p>${p.sub}</p>
+      </div>
+      <svg class="chev" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="card-body">
+      <div class="card-body-inner">
+        <div class="stack">${p.stack.map(s=>`<span class="pill">${s}</span>`).join('')}</div>
+        ${p.repo ? `<div class="project-link"><a class="btn ghost" href="${p.repo}" target="_blank" rel="noopener">View GitHub repository</a></div>` : ''}
+        <div class="desc">${p.desc}</div>
+        ${p.context ? `<div class="context"><b>Why this matters</b>${p.context.text}<span class="context-src">${p.context.source}</span></div>` : ''}
+        <div class="sub">Workflow</div>
+        <ul class="steps">${p.steps.map(s=>`<li>${s}</li>`).join('')}</ul>
+        <div class="finding"><b>Finding</b>${p.finding}</div>
+        ${p.remediation ? `<div class="sub">Remediation</div><ul class="steps remediation-list">${p.remediation.map(s=>`<li>${s}</li>`).join('')}</ul>` : ''}
+        ${shotsHtml}
+      </div>
+    </div>
+  `;
+  list.appendChild(card);
+  card.querySelectorAll('img').forEach(img=>{
+    img.addEventListener('load', ()=>{
+      if(card.classList.contains('open')){
+        card.querySelector('.card-body').style.maxHeight = card.querySelector('.card-body').scrollHeight + 'px';
+      }
+    });
+  });
+  card.querySelectorAll('.shot img').forEach(img=>{
+    img.addEventListener('click', ()=>{
+      openLightbox(img.src, img.alt);
+    });
+  });
+});
+
+// lightbox
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxCap = document.getElementById('lightboxCap');
+function openLightbox(src, cap){
+  lightboxImg.src = src;
+  lightboxImg.alt = cap;
+  lightboxCap.textContent = cap;
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+lightbox.addEventListener('click', (e)=>{
+  if(e.target === lightbox) closeLightbox();
+});
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape') closeLightbox();
+});
+
+document.querySelectorAll('.card-head').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const card = head.closest('.card');
+    const body = card.querySelector('.card-body');
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.card').forEach(c=>{
+      c.classList.remove('open');
+      c.querySelector('.card-body').style.maxHeight = null;
+    });
+    if(!isOpen){
+      card.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  });
+});
+
+
+// recalc open card height on theme/resize (images loading can change height)
+window.addEventListener('resize', ()=>{
+  document.querySelectorAll('.card.open').forEach(c=>{
+    c.querySelector('.card-body').style.maxHeight = c.querySelector('.card-body').scrollHeight + 'px';
+  });
+});
+</script>
+
+</body>
+</html>
